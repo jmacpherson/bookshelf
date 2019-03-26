@@ -10,16 +10,23 @@ import ca.pen.sieve.models.BookShelf;
 @Singleton
 public class Repository {
 
-    Context mApplicationContext;
+    NetworkRequestFactory mRequestFactory;
     StoryProvider mStoryProvider;
+    static BookShelf shelf;
 
     @Inject
-    public Repository(Context context, StoryProvider storyProvider) {
-        mApplicationContext = context;
+    public Repository(NetworkRequestFactory requestFactory, StoryProvider storyProvider) {
+        mRequestFactory = requestFactory;
         mStoryProvider = storyProvider;
     }
 
-    public BookShelf fetchStories() {
-        return mStoryProvider.fetchStories();
+    public void fetchStories() {
+        mRequestFactory.run(new Runnable() {
+            @Override
+            public void run() {
+//                shelf =
+                        mStoryProvider.fetchStories();
+            }
+        });
     }
 }

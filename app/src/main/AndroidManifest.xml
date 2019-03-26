@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.pen.sieve">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name="ca.pen.sieve.PensieveApplication"
         android:allowBackup="true"

@@ -10,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import ca.pen.sieve.models.BookShelf;
 import ca.pen.sieve.models.Story;
@@ -34,14 +35,20 @@ public class StoryProviderImpl implements StoryProvider {
             URL storyApi = new URL("https://www.wattpad.com/api/v3/stories?offset=0&limit=30&fields=stories(id,title,cover,user)");
 
             HttpURLConnection connection = (HttpURLConnection) storyApi.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("accept", "application/json");
+
             InputStreamReader isr = new InputStreamReader(connection.getInputStream());
 
-            BookShelf results = gson.fromJson(isr, BookShelf.class);
+            HashMap results = gson.fromJson(isr, HashMap.class);
 
 //            ArrayList<Story> results = new ArrayList<>();
 //            results.add(new Story());
 
-            return results;
+            isr.close();
+
+//            return results;
+            return null;
         } catch (IOException ex) {
             Log.i(TAG, "Exception fetching stories: " + ex.getMessage());
             return null;

@@ -8,13 +8,20 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
+import ca.pen.sieve.di.PensieveComponent;
+import ca.pen.sieve.providers.Repository;
 import ca.pen.sieve.viewmodels.MainViewModel;
 
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import javax.inject.Inject;
+
 public class MainActivity extends AppCompatActivity {
+
+    @Inject
+    Repository mRepository;
 
     MainViewModel mViewModel;
 
@@ -35,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        PensieveApplication.getApp().getComponent().inject(this);
+        mViewModel.init(mRepository);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mViewModel.fetchBookshelf();
     }
 
     @Override

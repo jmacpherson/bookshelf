@@ -8,7 +8,8 @@ import ca.pen.sieve.di.PensieveModule;
 
 public class PensieveApplication extends Application {
 
-    PensieveComponent component;
+    private static PensieveApplication sApplication;
+    private PensieveComponent component;
 
     @Override
     public void onCreate() {
@@ -16,5 +17,14 @@ public class PensieveApplication extends Application {
 
         component = DaggerPensieveComponent.builder()
                 .pensieveModule(new PensieveModule(this)).build();
+        sApplication = this;
+    }
+
+    public static PensieveApplication getApp() {
+        return sApplication;
+    }
+
+    public PensieveComponent getComponent() {
+        return component;
     }
 }
