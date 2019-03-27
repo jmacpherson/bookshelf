@@ -3,7 +3,7 @@ package ca.pen.sieve.di;
 import android.app.Application;
 import android.content.Context;
 
-import ca.pen.sieve.providers.NetworkRequestFactory;
+import ca.pen.sieve.providers.NetworkRequestRunner;
 import ca.pen.sieve.providers.StoryProvider;
 import ca.pen.sieve.providers.StoryProviderImpl;
 import dagger.Module;
@@ -29,7 +29,7 @@ public class PensieveModule {
     }
 
     @Provides
-    NetworkRequestFactory provideNetworkRequestFactory() {
-        return NetworkRequestFactory.getInstance();
+    NetworkRequestRunner provideNetworkRequestFactory() {
+        return NetworkRequestRunner.getInstance();
     }
 }

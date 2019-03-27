@@ -8,12 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 
-import ca.pen.sieve.models.BookShelf;
-import ca.pen.sieve.models.Story;
+import ca.pen.sieve.models.Stories;
 
 public class StoryProviderImpl implements StoryProvider {
 
@@ -29,10 +25,10 @@ public class StoryProviderImpl implements StoryProvider {
     }
 
     @Override
-    public BookShelf fetchStories() {
+    public Stories fetchStories(String url) {
         try {
             Gson gson = new Gson();
-            URL storyApi = new URL("https://www.wattpad.com/api/v3/stories?offset=0&limit=30&fields=stories(id,title,cover,user)");
+            URL storyApi = new URL(url);
 
             HttpURLConnection connection = (HttpURLConnection) storyApi.openConnection();
             connection.setRequestMethod("GET");
@@ -40,18 +36,14 @@ public class StoryProviderImpl implements StoryProvider {
 
             InputStreamReader isr = new InputStreamReader(connection.getInputStream());
 
-            HashMap results = gson.fromJson(isr, HashMap.class);
-
-//            ArrayList<Story> results = new ArrayList<>();
-//            results.add(new Story());
+            Stories results = gson.fromJson(isr, Stories.class);
 
             isr.close();
 
-//            return results;
-            return null;
+            return results;
         } catch (IOException ex) {
             Log.i(TAG, "Exception fetching stories: " + ex.getMessage());
-            return null;
+            return new Stories();
         }
     }
 }

@@ -1,30 +1,27 @@
 package ca.pen.sieve.providers;
 
-import android.net.Network;
 import android.util.Log;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-import javax.inject.Inject;
-
 import androidx.annotation.MainThread;
 
-public class NetworkRequestFactory {
+public class NetworkRequestRunner {
 
-    public static final String TAG = "NetworkRequestFactory";
-    private static NetworkRequestFactory sInstance;
+    public static final String TAG = "NetworkRequestRunner";
+    private static NetworkRequestRunner sInstance;
 
     private ThreadFactory mThreadFactory;
 
-    public static NetworkRequestFactory getInstance() {
+    public static NetworkRequestRunner getInstance() {
         if(sInstance == null) {
-            sInstance = new NetworkRequestFactory(Executors.defaultThreadFactory());
+            sInstance = new NetworkRequestRunner(Executors.defaultThreadFactory());
         }
         return sInstance;
     }
 
-    public NetworkRequestFactory(ThreadFactory threadFactory) {
+    public NetworkRequestRunner(ThreadFactory threadFactory) {
         mThreadFactory = threadFactory;
     }
 

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import ca.pen.sieve.di.PensieveComponent;
+import ca.pen.sieve.models.Stories;
 import ca.pen.sieve.providers.Repository;
 import ca.pen.sieve.viewmodels.MainViewModel;
 
@@ -49,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        mViewModel.fetchBookshelf();
+//        mViewModel.fetchBookshelf();
+        mViewModel.next(this);
     }
 
     @Override
