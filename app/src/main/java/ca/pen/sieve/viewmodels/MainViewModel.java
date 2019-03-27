@@ -2,25 +2,24 @@ package ca.pen.sieve.viewmodels;
 
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import ca.pen.sieve.constants.ApiConstants;
-import ca.pen.sieve.models.Stories;
+import ca.pen.sieve.models.Bookshelf;
 import ca.pen.sieve.providers.Repository;
 
 public class MainViewModel extends ViewModel {
 
     Repository mRepository;
 
-    ObservableField<Stories> currentStories = new ObservableField<>();
+    ObservableField<Bookshelf> currentStories = new ObservableField<>();
     ObservableField<Boolean> showProgress = new ObservableField<>(false);
 
     public void init(Repository repository) {
         mRepository = repository;
     }
 
-//    public LiveData<Stories> fetchBookshelf() {
+//    public LiveData<Bookshelf> fetchBookshelf() {
 ////        return mRepository.fetchStories();
 //    }
 
@@ -32,11 +31,11 @@ public class MainViewModel extends ViewModel {
         }
 
         showProgress.set(true);
-        mRepository.fetchStories(url).observe(owner, new Observer<Stories>() {
+        mRepository.fetchStories(url).observe(owner, new Observer<Bookshelf>() {
             @Override
-            public void onChanged(Stories stories) {
-                if (stories != null) {
-                    currentStories.set(stories);
+            public void onChanged(Bookshelf bookshelf) {
+                if (bookshelf != null) {
+                    currentStories.set(bookshelf);
                     showProgress.set(false);
                 }
             }

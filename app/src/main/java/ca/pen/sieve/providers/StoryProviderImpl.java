@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import ca.pen.sieve.models.Stories;
+import ca.pen.sieve.models.Bookshelf;
 
 public class StoryProviderImpl implements StoryProvider {
 
@@ -25,7 +25,7 @@ public class StoryProviderImpl implements StoryProvider {
     }
 
     @Override
-    public Stories fetchStories(String url) {
+    public Bookshelf fetchStories(String url) {
         try {
             Gson gson = new Gson();
             URL storyApi = new URL(url);
@@ -36,14 +36,14 @@ public class StoryProviderImpl implements StoryProvider {
 
             InputStreamReader isr = new InputStreamReader(connection.getInputStream());
 
-            Stories results = gson.fromJson(isr, Stories.class);
+            Bookshelf results = gson.fromJson(isr, Bookshelf.class);
 
             isr.close();
 
             return results;
         } catch (IOException ex) {
             Log.i(TAG, "Exception fetching stories: " + ex.getMessage());
-            return new Stories();
+            return new Bookshelf();
         }
     }
 }

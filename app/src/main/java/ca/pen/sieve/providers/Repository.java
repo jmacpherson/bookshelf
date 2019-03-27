@@ -7,14 +7,14 @@ import javax.inject.Singleton;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import ca.pen.sieve.models.Stories;
+import ca.pen.sieve.models.Bookshelf;
 
 @Singleton
 public class Repository {
 
     NetworkRequestRunner mRequestFactory;
     StoryProvider mStoryProvider;
-    static HashMap<String, Stories> cachedStories = new HashMap<>();
+    final HashMap<String, Bookshelf> cachedStories = new HashMap<>();
 
     @Inject
     public Repository(NetworkRequestRunner requestFactory, StoryProvider storyProvider) {
@@ -22,14 +22,14 @@ public class Repository {
         mStoryProvider = storyProvider;
     }
 
-    public LiveData<Stories> fetchStories(final String url) {
-        final MutableLiveData<Stories> results = new MutableLiveData<>();
+    public LiveData<Bookshelf> fetchStories(final String url) {
+        final MutableLiveData<Bookshelf> results = new MutableLiveData<>();
         mRequestFactory.run(new Runnable() {
             @Override
             public void run() {
-                Stories stories = mStoryProvider.fetchStories(url);
-                cachedStories.put(stories.nextUrl, stories);
-                results.postValue(stories);
+                Bookshelf bookshelf = mStoryProvider.fetchStories(url);
+                cachedStories.put(bookshelf.nextUrl, bookshelf);
+                results.postValue(bookshelf);
             }
         });
 

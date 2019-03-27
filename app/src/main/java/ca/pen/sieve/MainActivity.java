@@ -8,8 +8,6 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
-import ca.pen.sieve.di.PensieveComponent;
-import ca.pen.sieve.models.Stories;
 import ca.pen.sieve.providers.Repository;
 import ca.pen.sieve.viewmodels.MainViewModel;
 

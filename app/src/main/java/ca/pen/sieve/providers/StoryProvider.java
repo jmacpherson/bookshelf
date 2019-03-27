@@ -1,7 +1,7 @@
 package ca.pen.sieve.providers;
 
-import ca.pen.sieve.models.Stories;
+import ca.pen.sieve.models.Bookshelf;
 
 public interface StoryProvider {
-    Stories fetchStories(String url);
+    Bookshelf fetchStories(String url);
 }

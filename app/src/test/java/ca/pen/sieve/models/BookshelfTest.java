@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class StoriesTest {
+public class BookshelfTest {
 
     String sampleJson = "{\"stories\":" +
             "[" +
@@ -19,7 +19,7 @@ public class StoriesTest {
     @Test
     public void parsing_test() {
         Gson gson = new Gson();
-        Stories result = gson.fromJson(sampleJson, Stories.class);
+        Bookshelf result = gson.fromJson(sampleJson, Bookshelf.class);
 
         assertNotNull(result);
         assertNotNull(result.nextUrl);
