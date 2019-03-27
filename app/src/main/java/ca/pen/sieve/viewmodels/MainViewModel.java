@@ -12,8 +12,8 @@ public class MainViewModel extends ViewModel {
 
     Repository mRepository;
 
-    ObservableField<Bookshelf> currentStories = new ObservableField<>();
-    ObservableField<Boolean> showProgress = new ObservableField<>(false);
+    public ObservableField<Bookshelf> currentStories = new ObservableField<>();
+    public ObservableField<Boolean> showProgress = new ObservableField<>(false);
 
     public void init(Repository repository) {
         mRepository = repository;
