@@ -29,12 +29,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
         mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         BookShelfApplication.getApp().getComponent().inject(this);
         mViewModel.init(mRepository);
+
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
 
         binding.setModel(mViewModel);
 
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 //        mViewModel.fetchBookshelf();
-        mViewModel.next(this);
+//        mViewModel.next(this);
     }
 
     @Override

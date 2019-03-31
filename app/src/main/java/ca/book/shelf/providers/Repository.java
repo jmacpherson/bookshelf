@@ -61,7 +61,7 @@ public class Repository {
                             ? mStoryDao.getStoriesLoadedBefore(oldestStoryLoaded)
                             : mStoryDao.getMostRecentStories();
 
-                    if(catalog.size() > 0) {
+                    if(!catalog.isEmpty()) {
                         oldestStoryLoaded = catalog.get(catalog.size() - 1).id;
                     }
 

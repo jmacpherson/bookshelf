@@ -38,6 +38,7 @@ public class StoriesFragment extends Fragment implements LoadManager {
         FragmentStoriesBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_stories, container, false);
 
         setupUi(binding.getRoot());
+        next();
 
         return binding.getRoot();
     }
