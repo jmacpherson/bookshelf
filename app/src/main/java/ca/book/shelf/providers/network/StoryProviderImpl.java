@@ -24,24 +24,19 @@ public class StoryProviderImpl implements StoryProvider {
 
     @Override
     public Bookshelf fetchStories(String url) throws IOException {
-//        try {
-            Gson gson = new Gson();
-            URL storyApi = new URL(url);
+        Gson gson = new Gson();
+        URL storyApi = new URL(url);
 
-            HttpURLConnection connection = (HttpURLConnection) storyApi.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("accept", "application/json");
+        HttpURLConnection connection = (HttpURLConnection) storyApi.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("accept", "application/json");
 
-            InputStreamReader isr = new InputStreamReader(connection.getInputStream());
+        InputStreamReader isr = new InputStreamReader(connection.getInputStream());
 
-            Bookshelf results = gson.fromJson(isr, Bookshelf.class);
+        Bookshelf results = gson.fromJson(isr, Bookshelf.class);
 
-            isr.close();
+        isr.close();
 
-            return results;
-//        } catch (IOException ex) {
-//            Log.i(TAG, "Exception fetching stories: " + ex.getMessage());
-//            return new Bookshelf();
-//        }
+        return results;
     }
 }

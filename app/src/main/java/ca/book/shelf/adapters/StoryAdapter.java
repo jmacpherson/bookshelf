@@ -38,9 +38,10 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
     @Override
     public void onBindViewHolder(@NonNull final StoryViewHolder viewHolder, int i) {
         if((mCatalog.size() - 1) == i) {
+            lastLoaded = i;
             mLoadManager.next();
         }
-        lastLoaded = i;
+//        lastLoaded = i;
         Story story = mCatalog.get(i);
         Picasso.get().load(story.cover).into(viewHolder.getStoryImage());
         viewHolder.getStoryTitle().setText(story.title);

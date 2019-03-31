@@ -22,16 +22,19 @@ public class MainViewModel extends ViewModel {
     }
 
     public void next(LifecycleOwner owner) {
-        showProgress.set(true);
-        mRepository.fetchStories().observe(owner, new Observer<List<Story>>() {
-            @Override
-            public void onChanged(List<Story> catalog) {
-                if(catalog.size() > 0) {
-                    currentStories.get().addAll(catalog);
-                    currentStories.notifyChange();
+        if(!showProgress.get()) {
+            showProgress.set(true);
+            mRepository.fetchStories().observe(owner, new Observer<List<Story>>() {
+                @Override
+                public void onChanged(List<Story> catalog) {
+                    catalog.removeAll(currentStories.get());
+                    if (catalog.size() > 0) {
+                        currentStories.get().addAll(catalog);
+                        currentStories.notifyChange();
+                    }
+                    showProgress.set(false);
                 }
-                showProgress.set(false);
-            }
-        });
+            });
+        }
     }
 }
