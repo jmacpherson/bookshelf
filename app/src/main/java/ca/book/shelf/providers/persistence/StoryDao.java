@@ -16,7 +16,7 @@ public interface StoryDao {
     @Query("SELECT * FROM story ORDER BY timestamp DESC")
     List<Story> loadAllStories();
 
-    @Query("SELECT * FROM story WHERE timestamp > (SELECT timestamp FROM story WHERE id = :storyId) ORDER BY timestamp DESC LIMIT 10")
+    @Query("SELECT * FROM story WHERE timestamp < (SELECT timestamp FROM story WHERE id = :storyId) ORDER BY timestamp DESC LIMIT 10")
     List<Story> getStoriesLoadedBefore(String storyId);
 
     @Query("SELECT * FROM story ORDER BY timestamp DESC LIMIT 10")

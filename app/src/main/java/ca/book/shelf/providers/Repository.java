@@ -57,13 +57,10 @@ public class Repository {
                     results.postValue(bookshelf.stories);
                 } catch (IOException ex) {
                     Log.i(TAG, "Failed to access API: " + ex.getMessage());
-                    List<Story> catalog;
+                    List<Story> catalog = !TextUtils.isEmpty(oldestStoryLoaded)
+                            ? mStoryDao.getStoriesLoadedBefore(oldestStoryLoaded)
+                            : mStoryDao.getMostRecentStories();
 
-                    if(!TextUtils.isEmpty(oldestStoryLoaded)) {
-                        catalog = mStoryDao.getStoriesLoadedBefore(oldestStoryLoaded);
-                    } else {
-                        catalog = mStoryDao.getMostRecentStories();
-                    }
                     if(catalog.size() > 0) {
                         oldestStoryLoaded = catalog.get(catalog.size() - 1).id;
                     }
