@@ -32,6 +32,10 @@ public class NavigationManager {
         return topFragment != null ? topFragment.getTag() : StoriesFragment.TAG;
     }
 
+    public int getBackStackCount() {
+        return mFragmentManager.getBackStackEntryCount();
+    }
+
     private void showTarget(Fragment fragment, String tag) {
         FragmentTransaction ft = mFragmentManager.beginTransaction();
         ft.replace(mFragmentHolderId, fragment, tag);

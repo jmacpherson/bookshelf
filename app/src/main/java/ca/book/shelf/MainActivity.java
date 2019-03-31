@@ -130,6 +130,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if(mNavigationManager.getBackStackCount() > 1) {
+            super.onBackPressed();
+        } else {
+            finish();
+        }
+    }
+
     private void clearSearch() {
         mViewModel.searchResults.get().clear();
         mSearchView.setQuery("", false);
