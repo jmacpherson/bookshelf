@@ -55,8 +55,9 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
     }
 
     public void updateCatalog(ArrayList<Story> catalog) {
-        int end = this.mCatalog.size();
+        int end = this.mCatalog.size() - 1;
         this.mCatalog = catalog;
+        notifyItemInserted(end);
     }
 
     public static class StoryViewHolder extends RecyclerView.ViewHolder {

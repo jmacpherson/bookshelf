@@ -67,9 +67,7 @@ public class StoriesFragment extends Fragment implements LoadManager {
             mListener = new Observable.OnPropertyChangedCallback() {
                 @Override
                 public void onPropertyChanged(Observable sender, int propertyId) {
-//                    mAdapter.updateCatalog(mViewModel.currentStories.get());
-                    mAdapter = new StoryAdapter(mLoadManager, mViewModel.currentStories.get());
-                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.updateCatalog(mViewModel.currentStories.get());
                 }
             };
         }
