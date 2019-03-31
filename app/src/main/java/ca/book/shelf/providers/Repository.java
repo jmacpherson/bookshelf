@@ -29,7 +29,7 @@ public class Repository {
 
     private String nextUrl = ApiConstants.INITIAL_URL;
     private String oldestStoryLoaded;
-    private MutableLiveData<String> mErrorMessage = new MutableLiveData<>();
+    private MutableLiveData<String> mUserMessage = new MutableLiveData<>();
 
     @Inject
     public Repository(NetworkRequestRunner requestFactory, StoryProvider storyProvider, StoryDao storyDao) {
@@ -58,7 +58,7 @@ public class Repository {
                     results.postValue(bookshelf.stories);
                 } catch (IOException ex) {
                     Log.i(TAG, "Failed to access API: " + ex.getMessage());
-                    mErrorMessage.postValue("Failed to access API, loading from cache");
+                    mUserMessage.postValue("Failed to access API, loading from cache");
                     List<Story> catalog = !TextUtils.isEmpty(oldestStoryLoaded)
                             ? mStoryDao.getStoriesLoadedBefore(oldestStoryLoaded)
                             : mStoryDao.getMostRecentStories();
@@ -84,7 +84,9 @@ public class Repository {
                 String queryRegex = "%" + query + "%";
                 List<Story> searchResults = mStoryDao.searchStoryByTitle(queryRegex);
                 if(searchResults.isEmpty()) {
-                    mErrorMessage.postValue("No results found for: " + query);
+                    mUserMessage.postValue("No results found for: " + query);
+                } else {
+                    mUserMessage.postValue("Found " + searchResults.size() + " results for: " + query);
                 }
                 Log.i(TAG, "Found results: " + searchResults.size());
                 results.postValue(searchResults);
@@ -94,7 +96,7 @@ public class Repository {
         return results;
     }
 
-    public MutableLiveData<String> getErrorMessage() {
-        return mErrorMessage;
+    public MutableLiveData<String> getUserMessage() {
+        return mUserMessage;
     }
 }

@@ -27,7 +27,7 @@ public class MainViewModel extends ViewModel {
 
     public void init(final Context context, Repository repository) {
         mRepository = repository;
-        mRepository.getErrorMessage().observe((LifecycleOwner) context, new Observer<String>() {
+        mRepository.getUserMessage().observe((LifecycleOwner) context, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 if(!TextUtils.isEmpty(s)) {
