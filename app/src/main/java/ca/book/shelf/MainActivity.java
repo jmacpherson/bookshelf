@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         BookShelfApplication.getApp().getComponent().inject(this);
-        mViewModel.init(mRepository);
+        mViewModel.init(this, mRepository);
 
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setModel(mViewModel);

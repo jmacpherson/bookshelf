@@ -1,7 +1,9 @@
 package ca.book.shelf.viewmodels;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +25,17 @@ public class MainViewModel extends ViewModel {
     public ObservableField<ArrayList<Story>> searchResults = new ObservableField<>(new ArrayList<Story>());
     public ObservableField<Boolean> showProgress = new ObservableField<>(false);
 
-    public void init(Repository repository) {
+    public void init(final Context context, Repository repository) {
         mRepository = repository;
+        mRepository.getErrorMessage().observe((LifecycleOwner) context, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if(!TextUtils.isEmpty(s)) {
+                    Toast toast = Toast.makeText(context, s, Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
+        });
     }
 
     public void next(final LifecycleOwner owner) {
