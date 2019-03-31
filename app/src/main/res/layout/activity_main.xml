@@ -33,13 +33,12 @@
                     app:popupTheme="@style/AppTheme.PopupOverlay"
                     tools:text="Bookshelf"/>
 
-                <ImageButton
+                <SearchView
+                    android:id="@+id/search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="16dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@null"
-                    android:src="@drawable/ic_search"/>
+                    android:layout_gravity="center_vertical"></SearchView>
             </LinearLayout>
 
 
@@ -49,11 +48,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <fragment
-                android:id="@+id/fragment_stories"
-                android:name="ca.book.shelf.fragments.StoriesFragment"
+            <!--<fragment-->
+                <!--android:id="@+id/fragment_stories"-->
+                <!--android:name="ca.book.shelf.fragments.StoriesFragment"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"/>-->
+
+            <FrameLayout
+                android:id="@+id/fragment_placeholder"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
             <ProgressBar
                 android:layout_width="wrap_content"

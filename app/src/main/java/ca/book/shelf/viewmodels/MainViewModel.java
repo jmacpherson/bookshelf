@@ -1,5 +1,6 @@
 package ca.book.shelf.viewmodels;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class MainViewModel extends ViewModel {
     private Repository mRepository;
 
     public ObservableField<ArrayList<Story>> currentStories = new ObservableField<>(new ArrayList<Story>());
+    public ObservableField<ArrayList<Story>> searchResults = new ObservableField<>(new ArrayList<Story>());
     public ObservableField<Boolean> showProgress = new ObservableField<>(false);
 
     public void init(Repository repository) {
@@ -36,7 +38,7 @@ public class MainViewModel extends ViewModel {
                      * in an earlier API response can appear in later API responses also
                     */
                     catalog.removeAll(currentStories.get());
-                    if (catalog.size() > 0) {
+                    if (!catalog.isEmpty()) {
                         currentStories.get().addAll(catalog);
                         currentStories.notifyChange();
                     } else {
@@ -44,6 +46,23 @@ public class MainViewModel extends ViewModel {
                         next(owner);
                     }
                     showProgress.set(false);
+                }
+            });
+        }
+    }
+
+    public void search(LifecycleOwner owner, String query) {
+        if(!TextUtils.isEmpty(query)) {
+            showProgress.set(true);
+            mRepository.search(query).observe(owner, new Observer<List<Story>>() {
+                @Override
+                public void onChanged(List<Story> results) {
+                    showProgress.set(false);
+                    searchResults.get().clear();
+                    if (!results.isEmpty()) {
+                        searchResults.get().addAll(results);
+                        searchResults.notifyChange();
+                    }
                 }
             });
         }

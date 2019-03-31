@@ -1,7 +1,6 @@
 package ca.book.shelf.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +18,14 @@ import ca.book.shelf.adapters.StoryAdapter;
 import ca.book.shelf.databinding.FragmentStoriesBinding;
 import ca.book.shelf.viewmodels.MainViewModel;
 
-public class StoriesFragment extends Fragment implements LoadManager {
+public class SearchResultsFragment extends Fragment implements LoadManager{
 
-    public static final String TAG = "StoriesFragment";
+    public static final String TAG = "SearchResultsFragment";
 
     private RecyclerView mRecyclerView;
     private MainViewModel mViewModel;
     private StoryAdapter mAdapter;
-    private Observable.OnPropertyChangedCallback mListener;
+    private Observable.OnPropertyChangedCallback mResultsListener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,9 +38,7 @@ public class StoriesFragment extends Fragment implements LoadManager {
         FragmentStoriesBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_stories, container, false);
 
         setupUi(binding.getRoot());
-        if(mViewModel.currentStories.get().isEmpty()) {
-            next();
-        }
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         return binding.getRoot();
     }
@@ -49,40 +46,47 @@ public class StoriesFragment extends Fragment implements LoadManager {
     @Override
     public void onResume() {
         super.onResume();
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        setListeners();
     }
 
     @Override
-    public void onDestroyView() {
-        mViewModel.currentStories.removeOnPropertyChangedCallback(getCatalogListener());
-        super.onDestroyView();
+    public void onPause() {
+        super.onPause();
+        clearListeners();
     }
 
     private void setupUi(View rootView) {
         mRecyclerView = rootView.findViewById(R.id.stories);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new StoryAdapter(this, mViewModel.currentStories.get());
+        mAdapter = new StoryAdapter(this, mViewModel.searchResults.get());
         mRecyclerView.setAdapter(mAdapter);
-
-        mViewModel.currentStories.addOnPropertyChangedCallback(getCatalogListener());
     }
 
-    public Observable.OnPropertyChangedCallback getCatalogListener() {
-        if(mListener == null) {
-            mListener = new Observable.OnPropertyChangedCallback() {
+    private void setListeners() {
+        mViewModel.searchResults.addOnPropertyChangedCallback(getSearchResultsListener());
+    }
+
+    private void clearListeners() {
+        mViewModel.searchResults.removeOnPropertyChangedCallback(getSearchResultsListener());
+    }
+
+    private Observable.OnPropertyChangedCallback getSearchResultsListener() {
+        if(mResultsListener == null) {
+            mResultsListener = new Observable.OnPropertyChangedCallback() {
                 @Override
                 public void onPropertyChanged(Observable sender, int propertyId) {
-                    mAdapter.notifyAppended();
+                    mAdapter.notifyReplaced();
                 }
             };
         }
 
-        return mListener;
+        return mResultsListener;
     }
 
     @Override
     public void next() {
-        Log.i(TAG, "Loading more stories");
-        mViewModel.next(this);
+        /**
+         * No-op so that I can reuse the StoryAdapter
+         */
     }
 }

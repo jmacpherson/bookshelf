@@ -70,11 +70,18 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
         return mCatalog.size();
     }
 
-    public void updateCatalog() {
+    public void notifyAppended() {
         /**
          * New stories are added after the last loaded story
          */
         notifyItemInserted(lastLoaded + 1);
+    }
+
+    public void notifyReplaced() {
+        /**
+         * New search results replace previous search results
+         */
+        notifyDataSetChanged();
     }
 
     public static class StoryViewHolder extends RecyclerView.ViewHolder {

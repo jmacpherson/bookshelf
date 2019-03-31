@@ -21,4 +21,7 @@ public interface StoryDao {
 
     @Query("SELECT * FROM story WHERE id = :storyId")
     Story getStory(String storyId);
+
+    @Query("SELECT * FROM story WHERE title LIKE :query")
+    List<Story> searchStoryByTitle(String query);
 }

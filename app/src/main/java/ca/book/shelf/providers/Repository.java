@@ -73,4 +73,19 @@ public class Repository {
 
         return results;
     }
+
+    public MutableLiveData<List<Story>> search(final String query) {
+        final MutableLiveData<List<Story>> results = new MutableLiveData<>();
+        mRequestFactory.run(new Runnable() {
+            @Override
+            public void run() {
+                String queryRegex = "%" + query + "%";
+                List<Story> searchResults = mStoryDao.searchStoryByTitle(queryRegex);
+                Log.i(TAG, "Found results: " + searchResults.size());
+                results.postValue(searchResults);
+            }
+        });
+
+        return results;
+    }
 }
