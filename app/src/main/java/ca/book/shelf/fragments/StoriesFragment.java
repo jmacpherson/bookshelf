@@ -1,17 +1,14 @@
 package ca.book.shelf.fragments;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.Observable;
-import androidx.databinding.ObservableField;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,20 +18,18 @@ import ca.book.shelf.adapters.StoryAdapter;
 import ca.book.shelf.databinding.FragmentStoriesBinding;
 import ca.book.shelf.viewmodels.MainViewModel;
 
-import static ca.book.shelf.providers.network.NetworkRequestRunner.TAG;
-
 public class StoriesFragment extends Fragment implements LoadManager {
+
+    private static final String TAG = "StoriesFragment";
 
     private RecyclerView mRecyclerView;
     private MainViewModel mViewModel;
     private StoryAdapter mAdapter;
     private Observable.OnPropertyChangedCallback mListener;
-    private LoadManager mLoadManager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mLoadManager = this;
         mViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
     }
 
@@ -67,7 +62,7 @@ public class StoriesFragment extends Fragment implements LoadManager {
             mListener = new Observable.OnPropertyChangedCallback() {
                 @Override
                 public void onPropertyChanged(Observable sender, int propertyId) {
-                    mAdapter.updateCatalog(mViewModel.currentStories.get());
+                    mAdapter.updateCatalog();
                 }
             };
         }

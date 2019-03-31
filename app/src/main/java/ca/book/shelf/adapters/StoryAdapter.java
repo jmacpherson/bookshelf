@@ -1,6 +1,5 @@
 package ca.book.shelf.adapters;
 
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +10,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
-import androidx.databinding.Observable;
-import androidx.databinding.ObservableField;
 import androidx.recyclerview.widget.RecyclerView;
 import ca.book.shelf.R;
 import ca.book.shelf.fragments.LoadManager;
@@ -24,6 +20,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
 
     private LoadManager mLoadManager;
     private ArrayList<Story> mCatalog;
+    private int lastLoaded;
 
     public StoryAdapter(LoadManager loadManager, ArrayList<Story> catalog) {
         mLoadManager = loadManager;
@@ -43,6 +40,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
         if((mCatalog.size() - 1) == i) {
             mLoadManager.next();
         }
+        lastLoaded = i;
         Story story = mCatalog.get(i);
         Picasso.get().load(story.cover).into(viewHolder.getStoryImage());
         viewHolder.getStoryTitle().setText(story.title);
@@ -54,10 +52,8 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
         return mCatalog.size();
     }
 
-    public void updateCatalog(ArrayList<Story> catalog) {
-        int end = this.mCatalog.size() - 1;
-        this.mCatalog = catalog;
-        notifyItemInserted(end);
+    public void updateCatalog() {
+        notifyItemInserted(lastLoaded);
     }
 
     public static class StoryViewHolder extends RecyclerView.ViewHolder {
