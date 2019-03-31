@@ -4,7 +4,7 @@
         <import type="android.view.View"/>
         <variable
             name="model"
-            type="ca.pen.sieve.viewmodels.MainViewModel"/>
+            type="ca.book.shelf.viewmodels.MainViewModel"/>
     </data>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -34,7 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <fragment
-                android:name="ca.pen.sieve.fragments.StoriesFragment"
+                android:id="@+id/fragment_stories"
+                android:name="ca.book.shelf.fragments.StoriesFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
             <!--<FrameLayout-->
