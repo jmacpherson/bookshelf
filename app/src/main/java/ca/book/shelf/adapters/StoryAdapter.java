@@ -1,5 +1,6 @@
 package ca.book.shelf.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import ca.book.shelf.fragments.LoadManager;
 import ca.book.shelf.models.Story;
 
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHolder> {
+
+    private static final String TAG = "StoryAdapter";
 
     private LoadManager mLoadManager;
     private ArrayList<Story> mCatalog;
@@ -37,12 +40,26 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
 
     @Override
     public void onBindViewHolder(@NonNull final StoryViewHolder viewHolder, int i) {
+        /**
+         * i is 0 indexed, size() is not
+         */
         if((mCatalog.size() - 1) == i) {
             lastLoaded = i;
             mLoadManager.next();
         }
-//        lastLoaded = i;
+
+
         Story story = mCatalog.get(i);
+        /**
+         * Used to ensure loading is sequential and duplicates are eliminated
+         */
+        Log.d(TAG, "Binding: " + story.id + " at " + i + " has title: " + story.title);
+
+        /**
+         * Use Picasso to load images because it removes a *lot* of boilerplate,
+         * and autocaches for a better offline experience (were this going to production,
+         * would definitely want to look at cache trimming)
+         */
         Picasso.get().load(story.cover).into(viewHolder.getStoryImage());
         viewHolder.getStoryTitle().setText(story.title);
         viewHolder.getStoryAuthor().setText(story.user.name);
@@ -54,7 +71,10 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
     }
 
     public void updateCatalog() {
-        notifyItemInserted(lastLoaded);
+        /**
+         * New stories are added after the last loaded story
+         */
+        notifyItemInserted(lastLoaded + 1);
     }
 
     public static class StoryViewHolder extends RecyclerView.ViewHolder {

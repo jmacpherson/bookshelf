@@ -23,4 +23,21 @@ public class Story {
     public String cover;
     @ColumnInfo
     public long timestamp = new Date().getTime();
+
+
+    /**
+     * Override equals so that comparator operations will
+     * only consider story ID
+     *
+     * @param otherStory
+     * @return
+     */
+    @Override
+    public boolean equals(Object otherStory) {
+        if(!(otherStory instanceof Story)) {
+            return false;
+        } else {
+            return this.id.equals(((Story) otherStory).id);
+        }
+    }
 }
