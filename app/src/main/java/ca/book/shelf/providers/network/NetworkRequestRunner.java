@@ -30,7 +30,7 @@ public class NetworkRequestRunner {
         try {
             mThreadFactory.newThread(runnable).start();
         } catch(Throwable ex) {
-            Log.i(TAG, "Caught exception: " + ex.toString());
+            Log.e(TAG, "Caught exception: " + ex.toString());
         }
     }
 }

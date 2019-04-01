@@ -9,6 +9,7 @@ import ca.book.shelf.providers.network.StoryProvider;
 import ca.book.shelf.providers.network.StoryProviderImpl;
 import ca.book.shelf.providers.persistence.StoryDao;
 import ca.book.shelf.providers.persistence.StoryDatabase;
+import ca.book.shelf.utils.ToastUtils;
 import dagger.Module;
 import dagger.Provides;
 
@@ -43,5 +44,10 @@ public class BookShelfModule {
             db = Room.databaseBuilder(mApplication.getApplicationContext(), StoryDatabase.class, StoryDatabase.TAG).build();
         }
         return db.storyDao();
+    }
+
+    @Provides
+    ToastUtils provideToastUtils() {
+        return ToastUtils.getInstance();
     }
 }

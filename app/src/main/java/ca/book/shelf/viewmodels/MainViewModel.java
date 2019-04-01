@@ -27,15 +27,7 @@ public class MainViewModel extends ViewModel {
 
     public void init(final Context context, Repository repository) {
         mRepository = repository;
-        mRepository.getUserMessage().observe((LifecycleOwner) context, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if(!TextUtils.isEmpty(s)) {
-                    Toast toast = Toast.makeText(context, s, Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            }
-        });
+        mRepository.observeUserMessages(context);
     }
 
     public void next(final LifecycleOwner owner) {
